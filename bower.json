@@ -1,0 +1,24 @@
+{
+  "name": "decl-transclude",
+  "version": "0.1.0",
+  "authors": [
+    "sloosch <simon@sloosch.de>"
+  ],
+  "description": "multi element transclude for angular - to be more declarative",
+  "main": "decl-transclude.js",
+  "keywords": [
+    "angular",
+    "transclude"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.3.0"
+  }
+}

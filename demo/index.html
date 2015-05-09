@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body ng-app="app" ng-controller="AppController">
+<div decl-transclude some-directive>
+    <button ng-click="doIt()" decl-transclude-as="foo">Do it</button>
+    <div decl-transclude-as="bar">
+        something is {{$some.name}} with id {{$some.id}} <br>
+        <input type="text" ng-model="$some.name"/>
+    </div>
+    <div>plain old transclude</div>
+</div>
+
+<script src="../bower_components/angular/angular.js"></script>
+<script type="application/javascript" src="../decl-transclude.js"></script>
+<script type="application/javascript" src="app.js"></script>
+</body>
+</html>

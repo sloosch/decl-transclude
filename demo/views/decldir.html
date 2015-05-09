@@ -1,0 +1,11 @@
+<div>
+    hello world
+    <div decl-transclude-from="foo"></div>
+    <div ng-transclude></div>
+    <div ng-repeat="some in something" decl-transclude-from="bar" transclude-locals="{$some: some}"></div>
+    <ul>
+        <li ng-repeat="some in something">
+            {{some.name}} <span ng-click="remove(some)">&times;</span>
+        </li>
+    </ul>
+</div>
