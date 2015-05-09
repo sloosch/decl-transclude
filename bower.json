@@ -6,6 +6,7 @@
   ],
   "description": "multi element transclude for angular - to be more declarative",
   "main": "decl-transclude.js",
+  "homepage": "https://github.com/sloosch/decl-transclude",
   "keywords": [
     "angular",
     "transclude"
