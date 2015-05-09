@@ -1,5 +1,5 @@
-###decl-transclude
-##multi element transclude for angular - to be more declarative
+##decl-transclude
+###multi element transclude for angular - to be more declarative
 
 Transclude multiple elements into different places.
 
@@ -28,29 +28,31 @@ In the Template of your directive place 'decl-transclude-from' to transclude an 
 </div>
 ````
 
+
 You may define locals for the transcluded scope which then can be used by the element being transcluded:
-in the "main"-template
+<sub>in the "main"-template</sub>
 ````html
 <div some-directive decl-transclude>
     <div decl-transclude-as="bar">This is {{$some}} from the directive transcluding me!</div>
 </div>
 ````
-in the template of the directive
+<sub>in the template of the directive</sub>
 ````html
 <div class="some-directive">
     <div decl-transclude-from="bar" transclude-locals="{$some: 'r2d2'}"></div>
 </div>
 ````
 
+
 Mixing with 'ngTransclude' is possible:
-in the "main"-template
+<sub>in the "main"-template</sub>
 ````html
 <div some-directive decl-transclude>
     <div decl-transclude-as="quux">higgs</div>
     <div>this can be transcluded with ngTransclude</div>
 </div>
 ````
-in the template of the directive
+<sub>in the template of the directive</sub>
 ````html
 <div class="some-directive">
     <div ng-transclude></div>
