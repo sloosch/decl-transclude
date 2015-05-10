@@ -3,6 +3,21 @@
         'declTransclude'
     ]);
 
+    appModule.config(function (declRegistryProvider) {
+        declRegistryProvider
+            .register('myFormTitle')
+            .register('myFormInfo')
+            .register('myFormButtonTitle')
+            .register('myFormCancelTitle');
+    });
+
+    appModule.directive('myForm', function () {
+        return {
+            scope: {},
+            templateUrl: 'views/my-form.html'
+        };
+    });
+
     appModule.controller('AppController', function($scope) {
         $scope.doIt = function() {
             alert('test');
@@ -12,7 +27,7 @@
     appModule.directive('someDirective', function () {
         return {
             transclude:true,
-            scope: {},
+            scope: true,
             templateUrl: 'views/decldir.html',
             controller: function ($scope) {
                 $scope.something = [
@@ -29,6 +44,5 @@
             }
         };
     });
-
 
 })(angular);
