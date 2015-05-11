@@ -8,7 +8,9 @@
         var registry = [];
 
         var snakeCase = function (str) {
-            return str.replace(/([a-z][A-Z])/g, function (g) { return g[0] + '-' + g[1].toLowerCase()});
+            return str.replace(/([a-z][A-Z])/g, function (g) {
+                return g[0] + '-' + g[1].toLowerCase();
+            });
         };
 
         var entryForElement = function (element) {
@@ -67,7 +69,7 @@
                 });
             }
             return deferred.promise;
-        }
+        };
     });
 
     declModule.directive('declTransclude', function (declTranscludePriority, declRegistry) {
@@ -79,7 +81,7 @@
                 angular.forEach(tElement.children(), function (child) {
                     var register = declRegistry.entryForElement(child);
                     if(register) {
-                        temps[declRegistry.registryName(register, child)] = child;
+                        temps[declRegistry.registryName(register, child)] = child.outerHTML;
                         child.remove();
                     }
                 });
@@ -113,7 +115,7 @@
                     });
                 });
             }
-        }
+        };
     });
 
 })(angular);
