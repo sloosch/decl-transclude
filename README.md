@@ -28,11 +28,13 @@ Place the `decl-transclude` directive on the element which does contain the elem
 Register your elements via the `declRegistryProvider`:
 ````javascript
 appModule.config(function (declRegistryProvider) {
-        declRegistryProvider
-            .register('myFormTitle')
-            .register('myFormInfo')
-            .register('myFormButtonTitle')
-            .register('myFormCancelTitle');
+         declRegistryProvider.register([
+            'myFormTitle',
+            'myFormInfo',
+            'myFormButtonTitle',
+            'myFormCancelTitle',
+            'myFormHelpText'
+        ]);
     });
 ````
 this will discover elements having the registered name as tag-name or as attribute. So both are the same:
