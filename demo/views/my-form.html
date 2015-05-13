@@ -2,6 +2,7 @@
     <h4 decl-transclude-from="my-form-title"></h4>
     <input type="text" ng-model="form.data" required>
     <p decl-transclude-from="my-form-info" transclude-locals="{$form: myForm}"></p>
+    <p decl-transclude-from="my-form-help-text">This is the default content</p>
     <div class="footer">
         <button type="submit" decl-transclude-from="my-form-button-title"></button>
         <button type="button" decl-transclude-from="my-form-cancel-title">Default Cancel</button>

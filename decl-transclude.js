@@ -1,17 +1,18 @@
 (function (angular) {
     var declModule = angular.module('declTransclude', []);
 
-    declModule.value('declTranscludePriority', Infinity);
+    var declSnakeCase = function (camelCase) {
+        return camelCase.replace(/([a-z][A-Z])/g, function (g) {
+            return g[0] + '-' + g[1].toLowerCase();
+        });
+    };
 
+    declModule.value('declTranscludePriority', Infinity);
+    declModule.constant('DECL_OR_DEFAULT_IF', 'orDefaultIf');
+    declModule.constant('DECL_TRANSCLUDE_AS', 'declTranscludeAs');
 
     declModule.provider('declRegistry', function () {
         var registry = [];
-
-        var snakeCase = function (str) {
-            return str.replace(/([a-z][A-Z])/g, function (g) {
-                return g[0] + '-' + g[1].toLowerCase();
-            });
-        };
 
         var entryForElement = function (element) {
             for(var i = 0; i < registry.length; i++) {
@@ -29,7 +30,7 @@
                     elementName = [elementName];
                 }
                 angular.forEach(elementName, function (name) {
-                    registry.push({name: snakeCase(name), registryName: registryNameFn || angular.noop});
+                    registry.push({name: declSnakeCase(name), registryName: registryNameFn || angular.noop});
                 });
                 return declRegistry;
             },
@@ -45,15 +46,17 @@
         return declRegistry;
     });
 
-    declModule.config(function (declRegistryProvider) {
-        declRegistryProvider.register('declTranscludeAs', function (element) {
-            return element.attributes['decl-transclude-as'].value;
+    declModule.config(function (declRegistryProvider, DECL_TRANSCLUDE_AS) {
+        declRegistryProvider.register(DECL_TRANSCLUDE_AS, function (element) {
+            return element.attributes[declSnakeCase(DECL_TRANSCLUDE_AS)].value;
         });
     });
 
-    declModule.controller('declTranscludeController', function ($compile, $q) {
+    declModule.controller('declTranscludeController', function ($compile, $q, DECL_OR_DEFAULT_IF) {
         var self = this;
         var templates = {};
+        var orDefaultIfSnakeCase = declSnakeCase(DECL_OR_DEFAULT_IF);
+
         self.putTemplate = function (name, contents) {
             templates[name] = contents;
         };
@@ -69,9 +72,15 @@
                     scope = scope.$new();
                     angular.extend(scope, locals);
                 }
-                $compile(templateDef.contents)(scope, function (clone) {
-                    deferred.resolve(clone);
-                });
+
+                var element = angular.element(templateDef.contents)[0];
+                if(element.attributes[orDefaultIfSnakeCase] && scope.$eval(element.attributes[orDefaultIfSnakeCase].value)) {
+                    deferred.reject(name + ' wants default.');
+                } else {
+                    $compile(element)(scope, function (clone) {
+                        deferred.resolve(clone);
+                    });
+                }
             }
             return deferred.promise;
         };
@@ -122,7 +131,7 @@
                     };
                     declTransclude.transclude(attrs.declTranscludeFrom, getLocals()).then(function (clone) {
                         element.append(clone);
-                    }, transcludeDefault());
+                    }, transcludeDefault);
                 }
             }
         };

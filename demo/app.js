@@ -5,10 +5,13 @@
 
     appModule.config(function (declRegistryProvider) {
         declRegistryProvider
-            .register('myFormTitle')
-            .register('myFormInfo')
-            .register('myFormButtonTitle')
-            .register('myFormCancelTitle');
+            .register([
+                'myFormTitle',
+                'myFormInfo',
+                'myFormButtonTitle',
+                'myFormCancelTitle',
+                'myFormHelpText'
+            ]);
     });
 
     appModule.directive('myForm', function () {
@@ -21,6 +24,10 @@
     appModule.controller('AppController', function($scope) {
         $scope.doIt = function() {
             alert('test');
+        };
+
+        $scope.someStaticCondition = function () {
+          return true;
         };
     });
 

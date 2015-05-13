@@ -9,6 +9,7 @@
 <div my-form decl-transclude>
     <my-form-title>This is a title from outer scope</my-form-title>
     <my-form-info ng-if="!$form.$valid">The form is invalid!</my-form-info>
+    <my-form-help-text or-default-if="someStaticCondition()">This will only show when someStaticCondition() is false</my-form-help-text>
     <my-form-button-title>Yes!</my-form-button-title>
 </div>
 
