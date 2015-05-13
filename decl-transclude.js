@@ -24,8 +24,13 @@
         };
 
         var declRegistry = {
-            register: function (directiveName, registryNameFn) {
-                registry.push({name: snakeCase(directiveName), registryName: registryNameFn || angular.noop});
+            register: function (elementName, registryNameFn) {
+                if(!angular.isArray(elementName)) {
+                    elementName = [elementName];
+                }
+                angular.forEach(elementName, function (name) {
+                    registry.push({name: snakeCase(name), registryName: registryNameFn || angular.noop});
+                });
                 return declRegistry;
             },
             $get: function () {
@@ -101,19 +106,24 @@
             require: '?^declTransclude',
             transclude: true,
             link: function (scope, element, attrs, declTransclude, transclude) {
-                if(!declTransclude) return;
-                var getLocals = function () {
-                    if(attrs.transcludeLocals) {
-                        return scope.$eval(attrs.transcludeLocals);
-                    }
-                };
-                declTransclude.transclude(attrs.declTranscludeFrom, getLocals()).then(function (clone) {
-                    element.append(clone);
-                }, function () {
+                var transcludeDefault = function () {
                     transclude(function (clone) {
                         element.append(clone);
                     });
-                });
+                };
+
+                if(!declTransclude) {
+                    transcludeDefault();
+                } else {
+                    var getLocals = function () {
+                        if (attrs.transcludeLocals) {
+                            return scope.$eval(attrs.transcludeLocals);
+                        }
+                    };
+                    declTransclude.transclude(attrs.declTranscludeFrom, getLocals()).then(function (clone) {
+                        element.append(clone);
+                    }, transcludeDefault());
+                }
             }
         };
     });
