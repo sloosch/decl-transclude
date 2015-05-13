@@ -66,3 +66,15 @@ If you don't want to register elements you can use the predefined `decl-transclu
     <div decl-transclude-as="my-form-button-title">Yes!</div>
 </div>
 ````
+
+you can define a default content e.g.
+````html
+<buton type="button" decl-transclude-from="my-form-cancel-title">Default Cancel</button>
+````
+will give a button with the caption "Default Cancel" as long as no `my-form-cancel-title` element is given.
+
+if you wish, you can trigger which content to use with `or-default-if` (the expression is currently only evaluated once - no watching) e.g.
+````html
+<my-form-help-text or-default-if="someStaticCondition()">This will only show when someStaticCondition() is false</my-form-help-text>
+````
+will transclude the given content only if `someStaticCondition()` evaluates to false.
