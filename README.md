@@ -11,6 +11,7 @@ allow others to define the variable parts:
     <my-form-button-title>Yes!</my-form-button-title>
 </div>
 ````
+[Demo](http://plnkr.co/edit/4OFSjpeGsuFA6t0wPbPP?p=preview)
 
 ##Installation
 ````
