@@ -71,7 +71,7 @@ If you don't want to register elements you can use the predefined `decl-transclu
 
 you can define a default content e.g.
 ````html
-<buton type="button" decl-transclude-from="my-form-cancel-title">Default Cancel</button>
+<button type="button" decl-transclude-from="my-form-cancel-title">Default Cancel</button>
 ````
 will give a button with the caption "Default Cancel" as long as no `my-form-cancel-title` element is given.
 
