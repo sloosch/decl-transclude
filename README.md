@@ -75,7 +75,7 @@ you can define a default content e.g.
 ````
 will give a button with the caption "Default Cancel" as long as no `my-form-cancel-title` element is given.
 
-if you wish, you can trigger which content to use with `or-default-if` (the expression is currently only evaluated once - no watching) e.g.
+if you wish, you can trigger which content to use with `or-default-if` (the expression is currently only evaluated once in the linking phase - no watching) e.g.
 ````html
 <my-form-help-text or-default-if="someStaticCondition()">This will only show when someStaticCondition() is false</my-form-help-text>
 ````
