@@ -115,23 +115,26 @@
             require: '?^declTransclude',
             transclude: true,
             link: function (scope, element, attrs, declTransclude, transclude) {
+                var appendToElement = function (clone) {
+                  element.append(clone);
+                };
+
                 var transcludeDefault = function () {
-                    transclude(function (clone) {
-                        element.append(clone);
-                    });
+                    transclude(appendToElement);
+                };
+
+                var getLocals = function () {
+                    if (attrs.transcludeLocals) {
+                        return scope.$eval(attrs.transcludeLocals);
+                    }
                 };
 
                 if(!declTransclude) {
                     transcludeDefault();
                 } else {
-                    var getLocals = function () {
-                        if (attrs.transcludeLocals) {
-                            return scope.$eval(attrs.transcludeLocals);
-                        }
-                    };
-                    declTransclude.transclude(attrs.declTranscludeFrom, getLocals()).then(function (clone) {
-                        element.append(clone);
-                    }, transcludeDefault);
+                    declTransclude
+                        .transclude(attrs.declTranscludeFrom, getLocals())
+                        .then(appendToElement, transcludeDefault);
                 }
             }
         };
