@@ -57,7 +57,7 @@
     appModule.directive('myDecorativeInputWrapper', function () {
         return {
             scope: {},
-            template: '<label>decoration! <div decl-transclude-from="anInput"></div></label>'
+            template: '<label>decoration! <div decl-transclude-from="an-input"></div></label>'
         }
     });
 

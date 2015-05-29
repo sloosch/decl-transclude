@@ -15,7 +15,9 @@
 
 <hr/>
 <form name="aForm">
-    <input an-input type="text" ng-model="higgs.model" required>
+    <span my-decorative-input-wrapper decl-transclude>
+        <input an-input type="text" ng-model="higgs.model" required>
+    </span>
 </form>
 <p ng-show="aForm.$invalid">Enter a value to make the form valid!</p>
 <p ng-show="aForm.$valid">This input is transcluded and still keeps connected to the form.</p>
