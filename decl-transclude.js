@@ -95,7 +95,6 @@
             priority: declTranscludePriority,
             controller: 'declTranscludeController',
             compile: function (tElement) {
-                console.log(angular.element(tElement)[0].outerHTML);
                 var temps = {};
                 angular.forEach(tElement.children(), function (child) {
                     var register = declRegistry.entryForElement(child);
