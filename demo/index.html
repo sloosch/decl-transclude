@@ -14,6 +14,12 @@
 </div>
 
 <hr/>
+<form name="aForm">
+    <input an-input type="text" ng-model="higgs.model" required>
+</form>
+<p ng-show="aForm.$invalid">Enter a value to make the form valid!</p>
+<p ng-show="aForm.$valid">This input is transcluded and still keeps connected to the form.</p>
+<hr/>
 
 <div decl-transclude some-directive>
     <button ng-click="doIt()" decl-transclude-as="foo">Do it</button>

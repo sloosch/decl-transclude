@@ -10,7 +10,8 @@
                 'myFormInfo',
                 'myFormButtonTitle',
                 'myFormCancelTitle',
-                'myFormHelpText'
+                'myFormHelpText',
+                'anInput'
             ]);
     });
 
@@ -50,6 +51,14 @@
                 }
             }
         };
+    });
+
+    //demo for require ^form
+    appModule.directive('myDecorativeInputWrapper', function () {
+        return {
+            scope: {},
+            template: '<label>decoration! <div decl-transclude-from="anInput"></div></label>'
+        }
     });
 
 })(angular);

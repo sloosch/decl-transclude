@@ -61,7 +61,7 @@
             templates[name] = contents;
         };
 
-        self.transclude = function(name, locals) {
+        self.transcludeAndAppend = function(name, locals, futureParent) {
             var deferred = $q.defer();
             var templateDef = templates[name];
             if(!templateDef) {
@@ -73,13 +73,17 @@
                     angular.extend(scope, locals);
                 }
 
-                var element = angular.element(templateDef.contents)[0];
-                if(element.attributes[orDefaultIfSnakeCase] && scope.$eval(element.attributes[orDefaultIfSnakeCase].value)) {
+                var element = angular.element(templateDef.contents);
+
+                var rawElement = element[0];
+                if(rawElement.attributes[orDefaultIfSnakeCase] && scope.$eval(rawElement.attributes[orDefaultIfSnakeCase].value)) {
                     deferred.reject(name + ' wants default.');
                 } else {
-                    $compile(element)(scope, function (clone) {
-                        deferred.resolve(clone);
-                    });
+                    //by appending it here we ensure that the element does inherit the data e.g. parent controllers
+                    //so element can require other parent directives
+                    futureParent.append(element);
+                    $compile(element)(scope);
+                    deferred.resolve(element);
                 }
             }
             return deferred.promise;
@@ -91,6 +95,7 @@
             priority: declTranscludePriority,
             controller: 'declTranscludeController',
             compile: function (tElement) {
+                console.log(angular.element(tElement)[0].outerHTML);
                 var temps = {};
                 angular.forEach(tElement.children(), function (child) {
                     var register = declRegistry.entryForElement(child);
@@ -133,8 +138,8 @@
                     transcludeDefault();
                 } else {
                     declTransclude
-                        .transclude(attrs.declTranscludeFrom, getLocals())
-                        .then(appendToElement, transcludeDefault);
+                        .transcludeAndAppend(attrs.declTranscludeFrom, getLocals(), element)
+                        .catch(transcludeDefault);
                 }
             }
         };
