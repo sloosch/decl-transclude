@@ -90,7 +90,7 @@
         };
     });
 
-    declModule.directive('declTransclude', function (declTranscludePriority, declRegistry) {
+    var declTranscludeDirective = ['declTranscludePriority', 'declRegistry', function (declTranscludePriority, declRegistry) {
         return {
             priority: declTranscludePriority,
             controller: 'declTranscludeController',
@@ -98,7 +98,7 @@
                 var temps = {};
                 angular.forEach(tElement.children(), function (child) {
                     var register = declRegistry.entryForElement(child);
-                    if(register) {
+                    if (register) {
                         temps[declRegistry.registryName(register, child)] = child.outerHTML;
                         child.remove();
                     }
@@ -112,13 +112,24 @@
                 };
             }
         };
-    });
+    }];
+
+    /**
+     * @deprecated
+     */
+    declModule.directive('declTransclude', declTranscludeDirective);
+
+    /**
+     * @since 0.1.5
+     */
+    declModule.directive('withSetup', declTranscludeDirective);
 
     declModule.directive('declTranscludeFrom', function () {
         return {
-            require: '?^declTransclude',
+            require: ['?^declTransclude', '?^withSetup'],
             transclude: true,
-            link: function (scope, element, attrs, declTransclude, transclude) {
+            link: function (scope, element, attrs, ctrls, transclude) {
+                var declTransclude = ctrls[0] || ctrls[1];
                 var appendToElement = function (clone) {
                   element.append(clone);
                 };

@@ -5,7 +5,7 @@ Transclude multiple elements to declare your own readable interface e.g. you can
 allow others to define the variable parts:
 
 ````html
-<div my-form decl-transclude>
+<div my-form with-setup>
     <my-form-title>This is a title from outer scope</my-form-title>
     <my-form-info ng-if="!$form.$valid">The form is invalid!</my-form-info>
     <my-form-button-title>Yes!</my-form-button-title>
@@ -20,10 +20,10 @@ bower install decl-transclude
 
 ##Usage
 
-Place the `decl-transclude` directive on the element which does contain the elements you want to transclude:
+Place the `with-setup` directive on the element which does contain the elements you want to transclude:
 
 ````html
-<div my-form decl-transclude>...</div>
+<div my-form with-setup>...</div>
 ````
 
 Register your elements via the `declRegistryProvider`:
@@ -63,7 +63,7 @@ by using `transclude-locals` you can define variables available to the transclud
 If you don't want to register elements you can use the predefined `decl-transclude-as` attribute instead:
 
 ````html
-<div my-form decl-transclude>
+<div my-form with-setup>
     <div decl-transclude-as="my-form-title">This is a title from outer scope</div>
     <div decl-transclude-as="my-form-info" ng-if="!$form.$valid">The form is invalid!</div>
     <div decl-transclude-as="my-form-button-title">Yes!</div>

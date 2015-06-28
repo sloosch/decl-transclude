@@ -6,7 +6,7 @@
 </head>
 <body ng-app="app" ng-controller="AppController">
 
-<div my-form decl-transclude>
+<div my-form with-setup>
     <my-form-title>This is a title from outer scope</my-form-title>
     <my-form-info ng-if="!$form.$valid">The form is invalid!</my-form-info>
     <my-form-help-text or-default-if="someStaticCondition()">This will only show when someStaticCondition() is false</my-form-help-text>
@@ -15,7 +15,7 @@
 
 <hr/>
 <form name="aForm">
-    <span my-decorative-input-wrapper decl-transclude>
+    <span my-decorative-input-wrapper with-setup>
         <input an-input type="text" ng-model="higgs.model" required>
     </span>
 </form>
@@ -23,7 +23,7 @@
 <p ng-show="aForm.$valid">This input is transcluded and still keeps connected to the form.</p>
 <hr/>
 
-<div decl-transclude some-directive>
+<div some-directive with-setup>
     <button ng-click="doIt()" decl-transclude-as="foo">Do it</button>
     <div decl-transclude-as="bar">
         something is {{$some.name}} with id {{$some.id}} <br>
