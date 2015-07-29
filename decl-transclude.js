@@ -100,7 +100,7 @@
                     var register = declRegistry.entryForElement(child);
                     if (register) {
                         temps[declRegistry.registryName(register, child)] = child.outerHTML;
-                        child.remove();
+                        child.parentNode.removeChild(child);
                     }
                 });
                 return {
